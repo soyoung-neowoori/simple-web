@@ -25,7 +25,7 @@ jobs:
 
       - name: 4.S3 아티팩트 업로드
         run: |
-          aws s3 cp deploy.zip s3://${{ secrets.S3_BUCKET }}/deploy.zip
+          aws s3 cp deploy.zip s3://${{ secrets.AWS_BUCKET }}/deploy.zip
 
       - name: 5.현재 진행중인 AWS Deploy ID 가져오고 중단 시킨다. 
         run: |
@@ -51,7 +51,7 @@ jobs:
           DEPLOYMENT_ID=$(aws deploy create-deployment \
             --application-name simple-web-content \
             --deployment-group-name simple-web-deploy-group \
-            --s3-location bucket=${{ secrets.S3_BUCKET }},key=deploy.zip,bundleType=zip \
+            --s3-location bucket=${{ secrets.AWS_BUCKET }},key=deploy.zip,bundleType=zip \
             --output text \
             --query 'deploymentId')
           #echo "::set-output name=deployment_id::$DEPLOYMENT_ID"
